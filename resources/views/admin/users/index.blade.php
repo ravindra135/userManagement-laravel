@@ -13,7 +13,7 @@
         <div class="card-header">
             <i class="fas fa-users"></i>
             All Users
-            <a href="{{ route('admin.index') }}"><button class="btn btn-info btn-sm float-end"><i class="fa fa-plus" aria-hidden="true"></i> Add User</button></a>
+            <a href="{{ route('admin.users.create') }}"><button class="btn btn-info btn-sm float-end"><i class="fa fa-plus" aria-hidden="true"></i> Add User</button></a>
         </div>
         <div class="card-body">
             <table class="table">

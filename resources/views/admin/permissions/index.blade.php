@@ -54,7 +54,7 @@
                                 <tr>
                                     <td>{{ $permission->name }}</td>
                                     <td>
-                                        <a class="btn btn-outline-info btn-sm" href="{{ route('admin.index') }}"><i class="fa-solid fa-shield"></i></a>
+                                        <a class="btn btn-outline-info btn-sm" href="{{ route('admin.index') }}"><i class="fa-solid fa-pencil"></i></a>
 
                                         <div class="btn-group me-5">
                                             <form id="permission-delete" action="{{ route('admin.permissions.destroy', $permission->id) }}" method="post">

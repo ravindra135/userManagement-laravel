@@ -41,7 +41,12 @@
                     <i class="fa-solid fa-shield"></i>
                     Role Permission
                 </div>
-                <div class="card-body">
+                <div class="card-body bg-light">
+                    @if($role->permissions)
+                        @foreach ($role->permissions as $role_permission)
+                            <span class="badge rounded-pill bg-dark text-light">{{ $role_permission->name }}</span>
+                        @endforeach
+                    @endif
                 </div>
             </div>
 
@@ -51,21 +56,46 @@
                     Add Permissions
                 </div>
                 <div class="card-body">
-                    <form>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Permissions</th>
+                            <th>Attach</th>
+                            <th>Revoke</th>
+                        </tr>
+                        </thead>
+                        <tbody>
                         @foreach($permissions as $permission)
-
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="{{ $permission->name }}" id="flexCheckIndeterminate">
-                                <label class="form-check-label" for="flexCheckIndeterminate">
-                                    {{$permission->name}}
-                                </label>
-                            </div>
-
+                        <tr>
+                            <td>{{ $permission->name }}</td>
+                            <td>
+                                <form method="post" action="{{ route('admin.role.attachPermission', $role) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="permission" value="{{ $permission->id }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-success"
+                                         @if($role->hasPermissionTo($permission))
+                                             hidden
+                                    @endif
+                                    >Assign</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" action="{{ route('admin.role.detachPermission', $role) }}">
+                                    @csrf
+                                    @method('PUT')
+                                    <input type="hidden" name="permission" value="{{ $permission->id }}">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger"
+                                        @if(!$role->hasPermissionTo($permission))
+                                        hidden
+                                    @endif
+                                    >Revoke</button>
+                                </form>
+                            </td>
+                        </tr>
                         @endforeach
-                    </form>
-                </div>
-                <div class="card-footer">
-                    <button class="btn btn-info float-end">Update Permissions</button>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 

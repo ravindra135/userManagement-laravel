@@ -54,13 +54,15 @@
                                 <td>{{ $role->name }}</td>
 
                                 <td>
-                                    <a class="btn btn-outline-warning btn-sm" href="{{ route('admin.roles.edit', $role->id) }}"><i class="fa-solid fa-pencil"></i></a>
-                                    <a class="btn btn-outline-info btn-sm" href="{{ route('admin.index') }}"><i class="fa-solid fa-shield"></i></a>
+                                    <a class="btn btn-outline-warning btn-sm tooltip-test" title="Edit Role"
+                                       href="{{ route('admin.roles.edit', $role->id) }}"><i class="fa-solid fa-pencil"></i></a>
                                     <div class="btn-group me-5">
                                         <form id="role-delete" action="{{ route('admin.roles.destroy', $role->id) }}" method="post">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="btn btn-sm btn-outline-danger"><i class="fa-solid fa-trash-can"></i></button>
+                                            <button type="submit" title="Delete Role"
+                                                    class="btn btn-sm btn-outline-danger"
+                                                ><i class="fa-solid fa-trash-can"></i></button>
                                         </form>
                                     </div>
                                 </td>
@@ -75,4 +77,7 @@
             </div>
         </div>
     </div>
+@stop
+
+@section('scripts')
 @stop
