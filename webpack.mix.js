@@ -15,4 +15,5 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
     .sourceMaps();
 
-mix.sass('resources/sass/admin/sb-admin-2.scss', 'public/css/sb-admin-2.css');
+mix.styles('resources/css/styles.css', 'public/css/admin.css')
+    .scripts('resources/js/scripts.js', 'public/js/admin.js');

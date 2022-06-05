@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\IndexController;
+use App\Http\Controllers\Admin\PermissionController;
+use App\Http\Controllers\Admin\RoleController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,3 +24,15 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::group([
+    'middleware' => ['auth', 'role:admin|super admin'],
+    'prefix'     => 'admin',
+    'as'         => 'admin.'
+], function () {
+    Route::get('/', [IndexController::class, 'index'])->name('index');
+
+    Route::resource('/users', '\App\Http\Controllers\Admin\UserController');
+    Route::resource('/roles', '\App\Http\Controllers\Admin\RoleController');
+    Route::resource('/permissions', '\App\Http\Controllers\Admin\PermissionController');
+});
