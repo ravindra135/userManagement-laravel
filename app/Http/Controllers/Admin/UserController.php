@@ -40,4 +40,12 @@ class UserController extends Controller
         return redirect(route('admin.users.index'));
     }
 
+    public function destroy(FlasherInterface $flasher, User $user)
+    {
+        $user->delete();
+
+        $flasher->addDeleted();
+
+        return redirect()->back();
+    }
 }
