@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Flasher\Prime\FlasherInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Testing\Fluent\Concerns\Has;
@@ -14,9 +15,10 @@ class UserController extends Controller
 {
     use HasRoles;
 
-    public function index() {
+    public function index(FlasherInterface $flasher) {
 
         $users = User::all();
+        $flasher->addSuccess('Welcome To Users Section');
         return view('admin.users.index', compact('users'));
     }
 
@@ -25,7 +27,7 @@ class UserController extends Controller
         return view('admin.users.create', compact('roles'));
     }
 
-    public function store(Request $request) {
+    public function store(Request $request, FlasherInterface $flasher) {
 
         $user = User::create([
             'name' => $request->name,
@@ -33,11 +35,7 @@ class UserController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        if ($request->role == 0) {
-            $user->assignRole('user');
-        } else {
-            $user->assignRole($request->role);
-        }
+        $flasher->addCreated($user);
 
         return redirect(route('admin.users.index'));
     }
